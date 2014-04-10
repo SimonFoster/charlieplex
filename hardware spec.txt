@@ -1,0 +1,63 @@
+From: Foster, Simon (ACHE)
+Sent: 01 March 2007 14:17
+To: Patel, Sundip (ACHE)
+Subject: Here's the hardware spec
+
+PB.0    ---->   1K  ---->   LED ---->   PB.1
+PB.0    ---->   1K  ---->   LED ---->   PB.2
+PB.0    ---->   1K  ---->   LED ---->   PB.3
+PB.0    ---->   1K  ---->   LED ---->   PB.4
+PB.0    ---->   1K  ---->   LED ---->   PB.5
+
+PB.1    ---->   1K  ---->   LED ---->   PB.0
+PB.1    ---->   1K  ---->   LED ---->   PB.2
+PB.1    ---->   1K  ---->   LED ---->   PB.3
+PB.1    ---->   1K  ---->   LED ---->   PB.4
+PB.1    ---->   1K  ---->   LED ---->   PB.5
+
+PB.2    ---->   1K  ---->   LED ---->   PB.0
+PB.2    ---->   1K  ---->   LED ---->   PB.1
+PB.2    ---->   1K  ---->   LED ---->   PB.3
+PB.2    ---->   1K  ---->   LED ---->   PB.4
+PB.2    ---->   1K  ---->   LED ---->   PB.5
+
+PB.3    ---->   1K  ---->   LED ---->   PB.0
+PB.3    ---->   1K  ---->   LED ---->   PB.1
+PB.3    ---->   1K  ---->   LED ---->   PB.2
+PB.3    ---->   1K  ---->   LED ---->   PB.4
+PB.3    ---->   1K  ---->   LED ---->   PB.5
+
+PB.4    ---->   1K  ---->   LED ---->   PB.0
+PB.4    ---->   1K  ---->   LED ---->   PB.1
+PB.4    ---->   1K  ---->   LED ---->   PB.2
+PB.4    ---->   1K  ---->   LED ---->   PB.3
+PB.4    ---->   1K  ---->   LED ---->   PB.5
+
+PB.5    ---->   1K  ---->   LED ---->   PB.0
+PB.5    ---->   1K  ---->   LED ---->   PB.1
+PB.5    ---->   1K  ---->   LED ---->   PB.2
+PB.5    ---->   1K  ---->   LED ---->   PB.3
+PB.5    ---->   1K  ---->   LED ---->   PB.4
+
+AT Tiny 13 pinout
+
+                     ---v---
+        PB.5    1   -|     |-   8   VCC
+        PB.3    2   -|     |-   7   PB.2
+        PB.4    3   -|     |-   6   PB.1
+        GND     4   -|     |-   5   PB.0
+                     -------
+
+Keep it neat!!
+
+
+--
+Simon Foster
+Combined 28&270V Backshop Battery Charger Tel +44 (0)1242 632606 Simon.Foster@smiths-aerospace.com Smiths Aerospace, Electronic Systems Cheltenham, Bishops Cleeve, Cheltenham, Glos, GL52 8SF, UK
+
+This document and/or its attachments contain controlled data within the definition of the United Kingdom Export Control Act 2002.  
+Export and/or disclosure to the addressee(s) is authorised under the Open General Export Licence (Technology for Military Goods).
+
+This document contains Technical data within the definition of the International Traffic in Arms Regulations and is subject to the Export Control Laws
+22CFR124.3(a) of the U.S. Government. Export and/or disclosure to the addressee is authorised under Technical Assistance Agreement TA714-97A-C.
+

@@ -1,0 +1,259 @@
+
+charlieplex.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         00000118  00000000  00000000  00000054  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .debug_aranges 00000020  00000000  00000000  0000016c  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  2 .debug_pubnames 00000025  00000000  00000000  0000018c  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  3 .debug_info   00000109  00000000  00000000  000001b1  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  4 .debug_abbrev 000000bb  00000000  00000000  000002ba  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_line   00000125  00000000  00000000  00000375  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_frame  00000030  00000000  00000000  0000049c  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_str    0000009a  00000000  00000000  000004cc  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_loc    00000086  00000000  00000000  00000566  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_ranges 00000030  00000000  00000000  000005ec  2**0
+                  CONTENTS, READONLY, DEBUGGING
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	09 c0       	rjmp	.+18     	; 0x14 <__ctors_end>
+   2:	21 c0       	rjmp	.+66     	; 0x46 <__bad_interrupt>
+   4:	20 c0       	rjmp	.+64     	; 0x46 <__bad_interrupt>
+   6:	1f c0       	rjmp	.+62     	; 0x46 <__bad_interrupt>
+   8:	1e c0       	rjmp	.+60     	; 0x46 <__bad_interrupt>
+   a:	1d c0       	rjmp	.+58     	; 0x46 <__bad_interrupt>
+   c:	1c c0       	rjmp	.+56     	; 0x46 <__bad_interrupt>
+   e:	1b c0       	rjmp	.+54     	; 0x46 <__bad_interrupt>
+  10:	1a c0       	rjmp	.+52     	; 0x46 <__bad_interrupt>
+  12:	19 c0       	rjmp	.+50     	; 0x46 <__bad_interrupt>
+
+00000014 <__ctors_end>:
+  14:	11 24       	eor	r1, r1
+  16:	1f be       	out	0x3f, r1	; 63
+  18:	cf e9       	ldi	r28, 0x9F	; 159
+  1a:	cd bf       	out	0x3d, r28	; 61
+
+0000001c <__do_copy_data>:
+  1c:	10 e0       	ldi	r17, 0x00	; 0
+  1e:	a0 e6       	ldi	r26, 0x60	; 96
+  20:	b0 e0       	ldi	r27, 0x00	; 0
+  22:	e8 e1       	ldi	r30, 0x18	; 24
+  24:	f1 e0       	ldi	r31, 0x01	; 1
+  26:	02 c0       	rjmp	.+4      	; 0x2c <.do_copy_data_start>
+
+00000028 <.do_copy_data_loop>:
+  28:	05 90       	lpm	r0, Z+
+  2a:	0d 92       	st	X+, r0
+
+0000002c <.do_copy_data_start>:
+  2c:	a0 36       	cpi	r26, 0x60	; 96
+  2e:	b1 07       	cpc	r27, r17
+  30:	d9 f7       	brne	.-10     	; 0x28 <.do_copy_data_loop>
+
+00000032 <__do_clear_bss>:
+  32:	10 e0       	ldi	r17, 0x00	; 0
+  34:	a0 e6       	ldi	r26, 0x60	; 96
+  36:	b0 e0       	ldi	r27, 0x00	; 0
+  38:	01 c0       	rjmp	.+2      	; 0x3c <.do_clear_bss_start>
+
+0000003a <.do_clear_bss_loop>:
+  3a:	1d 92       	st	X+, r1
+
+0000003c <.do_clear_bss_start>:
+  3c:	a0 36       	cpi	r26, 0x60	; 96
+  3e:	b1 07       	cpc	r27, r17
+  40:	e1 f7       	brne	.-8      	; 0x3a <.do_clear_bss_loop>
+  42:	19 d0       	rcall	.+50     	; 0x76 <main>
+  44:	67 c0       	rjmp	.+206    	; 0x114 <_exit>
+
+00000046 <__bad_interrupt>:
+  46:	dc cf       	rjmp	.-72     	; 0x0 <__vectors>
+
+00000048 <delay>:
+#include <avr/io.h>
+
+#define PINS    6
+
+inline void delay( void )
+{
+  48:	df 93       	push	r29
+  4a:	cf 93       	push	r28
+  4c:	00 d0       	rcall	.+0      	; 0x4e <delay+0x6>
+  4e:	cd b7       	in	r28, 0x3d	; 61
+  50:	de b7       	in	r29, 0x3e	; 62
+    volatile uint16_t count = 1000;
+  52:	88 ee       	ldi	r24, 0xE8	; 232
+  54:	93 e0       	ldi	r25, 0x03	; 3
+  56:	9a 83       	std	Y+2, r25	; 0x02
+  58:	89 83       	std	Y+1, r24	; 0x01
+
+    while ( --count )
+  5a:	89 81       	ldd	r24, Y+1	; 0x01
+  5c:	9a 81       	ldd	r25, Y+2	; 0x02
+  5e:	01 97       	sbiw	r24, 0x01	; 1
+  60:	9a 83       	std	Y+2, r25	; 0x02
+  62:	89 83       	std	Y+1, r24	; 0x01
+  64:	89 81       	ldd	r24, Y+1	; 0x01
+  66:	9a 81       	ldd	r25, Y+2	; 0x02
+  68:	89 2b       	or	r24, r25
+  6a:	b9 f7       	brne	.-18     	; 0x5a <delay+0x12>
+        ;
+}
+  6c:	0f 90       	pop	r0
+  6e:	0f 90       	pop	r0
+  70:	cf 91       	pop	r28
+  72:	df 91       	pop	r29
+  74:	08 95       	ret
+
+00000076 <main>:
+
+
+int main( void )
+{
+  76:	0f 93       	push	r16
+  78:	1f 93       	push	r17
+  7a:	df 93       	push	r29
+  7c:	cf 93       	push	r28
+  7e:	00 d0       	rcall	.+0      	; 0x80 <main+0xa>
+  80:	00 d0       	rcall	.+0      	; 0x82 <main+0xc>
+  82:	cd b7       	in	r28, 0x3d	; 61
+  84:	de b7       	in	r29, 0x3e	; 62
+        {
+            for ( lo = 0; lo < PINS; lo++ )
+            {
+                if ( hi == lo ) continue;
+
+                PORTB   = ( 1 << hi );
+  86:	41 e0       	ldi	r20, 0x01	; 1
+  88:	50 e0       	ldi	r21, 0x00	; 0
+  8a:	a8 e3       	ldi	r26, 0x38	; 56
+  8c:	b0 e0       	ldi	r27, 0x00	; 0
+                DDRB    = ( 1 << hi ) +  ( 1 << lo );
+  8e:	e7 e3       	ldi	r30, 0x37	; 55
+  90:	f0 e0       	ldi	r31, 0x00	; 0
+
+#define PINS    6
+
+inline void delay( void )
+{
+    volatile uint16_t count = 1000;
+  92:	68 ee       	ldi	r22, 0xE8	; 232
+  94:	73 e0       	ldi	r23, 0x03	; 3
+{
+    volatile uint8_t hi, lo;
+
+    while (1)
+    {
+        for ( hi = 0; hi < PINS; hi++ )
+  96:	19 82       	std	Y+1, r1	; 0x01
+  98:	89 81       	ldd	r24, Y+1	; 0x01
+  9a:	86 30       	cpi	r24, 0x06	; 6
+  9c:	e0 f7       	brcc	.-8      	; 0x96 <main+0x20>
+        {
+            for ( lo = 0; lo < PINS; lo++ )
+  9e:	1a 82       	std	Y+2, r1	; 0x02
+  a0:	8a 81       	ldd	r24, Y+2	; 0x02
+  a2:	86 30       	cpi	r24, 0x06	; 6
+  a4:	78 f5       	brcc	.+94     	; 0x104 <__stack+0x65>
+            {
+                if ( hi == lo ) continue;
+  a6:	99 81       	ldd	r25, Y+1	; 0x01
+  a8:	8a 81       	ldd	r24, Y+2	; 0x02
+  aa:	98 17       	cp	r25, r24
+  ac:	29 f1       	breq	.+74     	; 0xf8 <__stack+0x59>
+
+                PORTB   = ( 1 << hi );
+  ae:	89 81       	ldd	r24, Y+1	; 0x01
+  b0:	8a 01       	movw	r16, r20
+  b2:	02 c0       	rjmp	.+4      	; 0xb8 <__stack+0x19>
+  b4:	00 0f       	add	r16, r16
+  b6:	11 1f       	adc	r17, r17
+  b8:	8a 95       	dec	r24
+  ba:	e2 f7       	brpl	.-8      	; 0xb4 <__stack+0x15>
+  bc:	0c 93       	st	X, r16
+                DDRB    = ( 1 << hi ) +  ( 1 << lo );
+  be:	29 81       	ldd	r18, Y+1	; 0x01
+  c0:	8a 81       	ldd	r24, Y+2	; 0x02
+  c2:	8a 01       	movw	r16, r20
+  c4:	02 c0       	rjmp	.+4      	; 0xca <__stack+0x2b>
+  c6:	00 0f       	add	r16, r16
+  c8:	11 1f       	adc	r17, r17
+  ca:	8a 95       	dec	r24
+  cc:	e2 f7       	brpl	.-8      	; 0xc6 <__stack+0x27>
+  ce:	c8 01       	movw	r24, r16
+  d0:	8a 01       	movw	r16, r20
+  d2:	02 c0       	rjmp	.+4      	; 0xd8 <__stack+0x39>
+  d4:	00 0f       	add	r16, r16
+  d6:	11 1f       	adc	r17, r17
+  d8:	2a 95       	dec	r18
+  da:	e2 f7       	brpl	.-8      	; 0xd4 <__stack+0x35>
+  dc:	80 0f       	add	r24, r16
+  de:	80 83       	st	Z, r24
+
+#define PINS    6
+
+inline void delay( void )
+{
+    volatile uint16_t count = 1000;
+  e0:	7c 83       	std	Y+4, r23	; 0x04
+  e2:	6b 83       	std	Y+3, r22	; 0x03
+
+    while ( --count )
+  e4:	8b 81       	ldd	r24, Y+3	; 0x03
+  e6:	9c 81       	ldd	r25, Y+4	; 0x04
+  e8:	01 97       	sbiw	r24, 0x01	; 1
+  ea:	9c 83       	std	Y+4, r25	; 0x04
+  ec:	8b 83       	std	Y+3, r24	; 0x03
+  ee:	8b 81       	ldd	r24, Y+3	; 0x03
+  f0:	9c 81       	ldd	r25, Y+4	; 0x04
+  f2:	89 2b       	or	r24, r25
+  f4:	b9 f7       	brne	.-18     	; 0xe4 <__stack+0x45>
+                if ( hi == lo ) continue;
+
+                PORTB   = ( 1 << hi );
+                DDRB    = ( 1 << hi ) +  ( 1 << lo );
+                delay();
+                DDRB  = 0;
+  f6:	10 82       	st	Z, r1
+
+    while (1)
+    {
+        for ( hi = 0; hi < PINS; hi++ )
+        {
+            for ( lo = 0; lo < PINS; lo++ )
+  f8:	8a 81       	ldd	r24, Y+2	; 0x02
+  fa:	8f 5f       	subi	r24, 0xFF	; 255
+  fc:	8a 83       	std	Y+2, r24	; 0x02
+  fe:	8a 81       	ldd	r24, Y+2	; 0x02
+ 100:	86 30       	cpi	r24, 0x06	; 6
+ 102:	88 f2       	brcs	.-94     	; 0xa6 <__stack+0x7>
+{
+    volatile uint8_t hi, lo;
+
+    while (1)
+    {
+        for ( hi = 0; hi < PINS; hi++ )
+ 104:	89 81       	ldd	r24, Y+1	; 0x01
+ 106:	8f 5f       	subi	r24, 0xFF	; 255
+ 108:	89 83       	std	Y+1, r24	; 0x01
+ 10a:	89 81       	ldd	r24, Y+1	; 0x01
+ 10c:	86 30       	cpi	r24, 0x06	; 6
+ 10e:	08 f0       	brcs	.+2      	; 0x112 <__stack+0x73>
+ 110:	c2 cf       	rjmp	.-124    	; 0x96 <main+0x20>
+ 112:	c5 cf       	rjmp	.-118    	; 0x9e <main+0x28>
+
+00000114 <_exit>:
+ 114:	f8 94       	cli
+
+00000116 <__stop_program>:
+ 116:	ff cf       	rjmp	.-2      	; 0x116 <__stop_program>
